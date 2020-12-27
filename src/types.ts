@@ -4,7 +4,7 @@ export interface ImgurResponse<T> {
   success: boolean;
 }
 
-export interface IGalleryItem {
+export interface GalleryItemType {
   id: string;
   title: string;
   description: string;
@@ -25,17 +25,18 @@ export interface IGalleryItem {
   topic_id: number;
 }
 
-export interface IGalleryAlbum extends IGalleryItem {
+export interface GalleryAlbumType extends GalleryItemType {
   cover: string;
   cover_width: number;
   cover_height: number;
   privacy: string;
   layout: string;
   images_count: number;
-  images: Array<Image>;
+  images: Image[];
+  is_album: true;
 }
 
-export interface IGalleryImage extends IGalleryItem {
+export interface GalleryImageType extends GalleryItemType {
   type: string;
   animated: boolean;
   width: number;
@@ -48,7 +49,10 @@ export interface IGalleryImage extends IGalleryItem {
   webm?: string;
   looping?: boolean;
   section: string;
+  is_album: false;
 }
+
+export type GalleryResponse = (GalleryImageType | GalleryAlbumType)[];
 
 export interface Image {
   id: string;

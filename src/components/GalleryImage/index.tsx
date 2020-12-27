@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import { IGalleryImage } from '../../types';
+import { GalleryImageType } from '../../types';
 import { getImgurImageJPG } from '../../utils';
 
 import AspectRatio from '../AspectRatio';
 
 interface IGalleryImageProps {
-  image: IGalleryImage;
+  image: GalleryImageType;
 }
 
 const GalleryImage: FC<IGalleryImageProps> = ({ image }) => {

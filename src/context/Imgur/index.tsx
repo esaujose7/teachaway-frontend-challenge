@@ -1,7 +1,7 @@
 import { useState, useEffect, FC } from 'react';
 import { createCtx } from '../../utils';
 import { getImgurGallery, } from '../../services/ImgurService';
-import { IGalleryImage, IGalleryAlbum, ImgurGallerySections, ImgurGallerySortValues, ImgurGalleryWindowOfTime } from '../../types';
+import { GalleryResponse, ImgurGallerySections, ImgurGallerySortValues, ImgurGalleryWindowOfTime } from '../../types';
 
 interface ImgurContextType {
   state: {
@@ -11,7 +11,7 @@ interface ImgurContextType {
     viralImages: boolean,
     error: Error | null,
     loading: boolean,
-    data: (IGalleryImage | IGalleryAlbum)[]
+    data: GalleryResponse
   },
   actions: {
     setSort: Function,
@@ -24,7 +24,7 @@ interface ImgurContextType {
 const [useImgurContext, Provider] = createCtx<ImgurContextType>();
 
 const ImgurContextProvider: FC = ({ children }) => {
-  const [data, setData] = useState<(IGalleryImage | IGalleryAlbum)[]>([]);
+  const [data, setData] = useState<GalleryResponse>([]);
   const [error, setErr] = useState<Error | null>(null);
   const [loading, setLoading] = useState(true);
 
