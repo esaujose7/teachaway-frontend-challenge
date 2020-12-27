@@ -5,18 +5,14 @@ import './style.css';
 interface IAspectRatioProps {
   width: number,
   height: number,
-  displayWidth: number,
 }
 
 // https://css-tricks.com/aspect-ratio-boxes/#using-custom-properties
-const AspectRatio: FC<IAspectRatioProps> = ({ width, height, displayWidth, children }) => {
-  const aspectRatioStyle = {
-    '--aspect-ratio': (width / height).toFixed(2),
-    width: displayWidth
-  } as CSSProperties;
+const AspectRatio: FC<IAspectRatioProps> = ({ width, height, children }) => {
+  const aspectRatioStyle = { '--aspect-ratio': (width / height).toFixed(2) } as CSSProperties;
 
   return (
-    <div style={aspectRatioStyle}>
+    <div className="aspect-ratio__container" style={aspectRatioStyle}>
       {children}
     </div>
   );
