@@ -77,6 +77,23 @@ export interface Image {
   account_id?: number;
 }
 
-export type ImgurGallerySection = "hot" | "top" | "user";
-export type ImgurGallerySortValues = "viral" | "top" | "time" | "rising";
-export type ImgurGalleryWindowOfTime = "day" | "week" | "month" | "year" | "all";
+export enum ImgurGallerySections {
+  HOT = 'hot',
+  TOP = 'top',
+  USER = 'user'
+};
+
+export enum ImgurGallerySortValues {
+  VIRAL = 'viral',
+  TOP = 'top',
+  TIME = 'time',
+  RISING = 'rising'
+};
+
+export enum ImgurGalleryWindowOfTime {
+  DAY = 'day',
+  WEEK = 'week',
+  MONTH = 'month',
+  YEAR = 'year',
+  ALL = 'all'
+};
