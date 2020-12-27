@@ -1,26 +1,5 @@
 import { api } from '../utils';
-import { ImgurResponse, IGalleryImage, IGalleryAlbum } from '../types';
-
-export enum ImgurGallerySections {
-  HOT = 'hot',
-  TOP = 'top',
-  USER = 'user'
-};
-
-export enum ImgurGallerySortValues {
-  VIRAL = 'viral',
-  TOP = 'top',
-  TIME = 'time',
-  RISING = 'rising'
-};
-
-export enum ImgurGalleryWindowOfTime {
-  DAY = 'day',
-  WEEK = 'week',
-  MONTH = 'month',
-  YEAR = 'year',
-  ALL = 'all'
-};
+import { ImgurResponse, IGalleryImage, IGalleryAlbum, ImgurGallerySections, ImgurGallerySortValues, ImgurGalleryWindowOfTime } from '../types';
 
 function getImgurGallery(
   section: ImgurGallerySections = ImgurGallerySections.HOT,
