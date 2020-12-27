@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import useInnerWidth from '../../hooks/useInnerWidth';
-import { IGalleryImage, IGalleryAlbum } from '../../types';
+import { GalleryResponse } from '../../types';
 
 import GalleryCard from '../GalleryCard';
 
 interface IGalleryFeedProps {
-  items: (IGalleryAlbum | IGalleryImage)[]
+  items: GalleryResponse;
 }
 
 const numberOfColumnsByBreakpoint = {
@@ -25,8 +25,8 @@ const getNumberOfColumns = (breakpointsToColumnsMap: typeof numberOfColumnsByBre
   return entriesBreakpointsToColumnsMap[entriesBreakpointsToColumnsMap.length - 1][1] + 1; // just one greater than the breakpoints provided
 }
 
-const generateColumns = (items: (IGalleryImage | IGalleryAlbum)[], numberOfcolumns: number): ((IGalleryImage | IGalleryAlbum)[])[]  => {
-  const columns: ((IGalleryImage | IGalleryAlbum)[])[] = Array(numberOfcolumns).fill([]);
+const generateColumns = (items: GalleryResponse, numberOfcolumns: number): GalleryResponse[]  => {
+  const columns: GalleryResponse[] = Array(numberOfcolumns).fill([]);
   
   for (const [i, galleryItem] of items.entries()) {
     columns[i % numberOfcolumns] = columns[i % numberOfcolumns].concat(galleryItem);
@@ -37,8 +37,9 @@ const generateColumns = (items: (IGalleryImage | IGalleryAlbum)[], numberOfcolum
 
 const GalleryFeed: FC<IGalleryFeedProps> = ({ items }) => {
   const innerWidth = useInnerWidth();
+  const numberOfColumns = getNumberOfColumns(numberOfColumnsByBreakpoint, innerWidth);
 
-  const columns = generateColumns(items, getNumberOfColumns(numberOfColumnsByBreakpoint, innerWidth));
+  const columns = useMemo(() => generateColumns(items, numberOfColumns), [items, numberOfColumns]);
 
   return (
     <main className="grid-container">
