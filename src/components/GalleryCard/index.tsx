@@ -1,22 +1,19 @@
 import{ FC } from 'react';
-
-import { IGalleryAlbum, IGalleryImage } from '../../types';
-
+import { GalleryAlbumType, GalleryImageType } from '../../types';
 import GalleryImage from '../GalleryImage';
-import GalleryAlbum from '../GalleryAlbum';
 
 import './style.css';
 
 interface IGalleryCardProps {
-  galleryItem: IGalleryImage | IGalleryAlbum;
+  galleryItem: GalleryAlbumType | GalleryImageType;
 }
 
 const GalleryCard: FC<IGalleryCardProps> = ({ galleryItem }) => (
-  <div key={galleryItem.id} className="gallery-card">
+  <div className="gallery-card">
     {
       galleryItem.is_album
-        ? <GalleryAlbum album={galleryItem as IGalleryAlbum} />
-        : <GalleryImage image={galleryItem as IGalleryImage} />
+        ? <GalleryImage image={galleryItem.images[0] as GalleryImageType} />
+        : <GalleryImage image={galleryItem} />
     }
     <span className="gallery-description">{galleryItem.title}</span>
   </div>
