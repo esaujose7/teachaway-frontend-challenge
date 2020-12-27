@@ -1,7 +1,7 @@
 import { useState, useEffect, FC } from 'react';
 import { createCtx } from '../../utils';
-import { getImgurGallery, ImgurGallerySections, ImgurGallerySortValues, ImgurGalleryWindowOfTime } from '../../services/ImgurService';
-import { IGalleryImage, IGalleryAlbum } from '../../types';
+import { getImgurGallery, } from '../../services/ImgurService';
+import { IGalleryImage, IGalleryAlbum, ImgurGallerySections, ImgurGallerySortValues, ImgurGalleryWindowOfTime } from '../../types';
 
 interface ImgurContextType {
   state: {
