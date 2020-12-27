@@ -8,7 +8,7 @@ const useInnerWidth = () => {
     setInnerWidth(window.innerWidth);
   }
 
-  const debouncedHandleResize = debounce(handleResize, 500);
+  const debouncedHandleResize = debounce(handleResize, 250);
 
   useLayoutEffect(() => {
     window.addEventListener('resize', debouncedHandleResize);
