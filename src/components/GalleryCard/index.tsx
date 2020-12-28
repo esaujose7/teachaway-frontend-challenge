@@ -1,4 +1,5 @@
 import{ FC } from 'react';
+import { useImgurActions } from '../../context/Imgur';
 import { GalleryAlbumType, GalleryImageType } from '../../types';
 import GalleryImage from '../GalleryImage';
 
@@ -9,15 +10,15 @@ interface IGalleryCardProps {
   width: number;
 }
 
-const GalleryCard: FC<IGalleryCardProps> = ({ galleryItem, width }) => (
-  <div className="gallery-card">
-    {
-      galleryItem.is_album
-        ? <GalleryImage image={galleryItem.images[0] as GalleryImageType} displayWidth={width} />
-        : <GalleryImage image={galleryItem} displayWidth={width}/>
-    }
-    <span className="gallery-description">{galleryItem.title}</span>
-  </div>
-);
+const GalleryCard: FC<IGalleryCardProps> = ({ galleryItem, width }) => {
+  const { setSelectedMedia } = useImgurActions();
+
+  return (
+    <div className="gallery-card" onClick={() => { setSelectedMedia(galleryItem) }}>
+      <GalleryImage image={galleryItem.is_album ? galleryItem.images[0] as GalleryImageType : galleryItem} displayWidth={width}/>
+      <span className="gallery-description">{galleryItem.title}</span>
+    </div>
+  );
+};
 
 export default GalleryCard;
