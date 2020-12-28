@@ -1,4 +1,6 @@
-import { useImgurState } from './context/Imgur';
+import { MouseEvent } from 'react';
+import { useImgurState, useImgurActions } from './context/Imgur';
+import SelectedMediaModal from './components/SelectedMediaModal';
 import GalleryFeed from './components/GalleryFeed';
 import GalleryControls from './components/GalleryControls';
 import Error from './components/Error';
@@ -7,7 +9,8 @@ import Loading from './components/Loading';
 import './App.css'
 
 const App = () => {
-  const { error, loading, images, selectedImage } = useImgurState();
+  const { error, loading, images, selectedMedia } = useImgurState();
+  const { setSelectedMedia } = useImgurActions();
 
   if (error) {
     return (
@@ -19,7 +22,7 @@ const App = () => {
 
   return (
     <div className="wrapper">
-      {selectedImage && <div>{JSON.stringify(selectedImage, null, 2)}</div>}
+      {selectedMedia && <SelectedMediaModal selectedMedia={selectedMedia} closeModal={(_: MouseEvent) => { setSelectedMedia(null); }} />}     
       <GalleryControls />
       {loading ? <Loading /> : <GalleryFeed items={images} />}
     </div>
@@ -27,3 +30,5 @@ const App = () => {
 }
 
 export default App;
+
+
