@@ -1,14 +1,53 @@
 @import '../node_modules/modern-normalize/modern-normalize.css';
 
+/* BREAKPOINTS */
+:root {
+  --small:728px;
+  --medium:1024px;
+  --large:1366px;
+}
+
 .wrapper {
-  max-width: 80%;
-  margin: 0 auto;
+  max-width: 95%;
+  margin: 30px auto;
 }
 
 .header {
   width: 100%;
   display: flex;
-  justify-content: center;
-  height: 200px;
-  align-items: center;
+  justify-content: space-around;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.grid-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.ml-10 {
+  margin-left: 20px;
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  .wrapper {
+    max-width: 90%;
+  }
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1600px) {
+  .wrapper {
+    max-width: 80%;
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  .wrapper {
+    max-width: 75%;
+  }
 }
