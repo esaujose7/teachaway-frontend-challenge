@@ -1,14 +1,13 @@
 import { FC } from 'react';
-import { GalleryImageType } from '../../types';
-
+import { GalleryImageType, Image } from '../../types';
 import AspectRatio from '../AspectRatio';
 
 interface IGalleryImageProps {
-  image: GalleryImageType;
+  image: GalleryImageType | Image;
   displayWidth: number;
 }
 
-function getImgurImageJPG(image: GalleryImageType) {
+function getImgurImageJPG(image: GalleryImageType | Image) {
   const [, extension] = image.type.split('/');
   const splittedUrl = image.link.split(extension);
   splittedUrl[splittedUrl.length - 1] = 'jpg';
