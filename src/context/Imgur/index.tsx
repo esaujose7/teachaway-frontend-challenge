@@ -1,7 +1,7 @@
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect, FC, Dispatch, SetStateAction } from 'react';
 import { createCtx } from '../../utils';
 import { getImgurGallery, } from '../../services/ImgurService';
-import { GalleryResponse, ImgurGallerySections, ImgurGallerySortValues, ImgurGalleryWindowOfTime } from '../../types';
+import { GalleryResponse, GalleryImageType, ImgurGallerySections, ImgurGallerySortValues, ImgurGalleryWindowOfTime } from '../../types';
 
 interface ImgurContextType {
   state: {
@@ -11,20 +11,22 @@ interface ImgurContextType {
     viralImages: boolean,
     error: Error | null,
     loading: boolean,
-    data: GalleryResponse
+    images: GalleryResponse,
+    selectedImage?: GalleryImageType | null
   },
   actions: {
-    setSort: Function,
-    setSection: Function,
-    setWindowTime: Function,
-    setViralImages: (newState: boolean | ((prevState: boolean) => boolean)) => void
+    setSort: Dispatch<SetStateAction<ImgurGallerySortValues>>,
+    setSection: Dispatch<SetStateAction<ImgurGallerySections>>,
+    setWindowTime: Dispatch<SetStateAction<ImgurGalleryWindowOfTime>>,
+    setViralImages: Dispatch<SetStateAction<boolean>>,
+    setSelectedImage:Dispatch<SetStateAction<GalleryImageType | null>> 
   }
 }
 
 const [useImgurContext, Provider] = createCtx<ImgurContextType>();
 
 const ImgurContextProvider: FC = ({ children }) => {
-  const [data, setData] = useState<GalleryResponse>([]);
+  const [images, setImages] = useState<GalleryResponse>([]);
   const [error, setErr] = useState<Error | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -33,9 +35,11 @@ const ImgurContextProvider: FC = ({ children }) => {
   const [windowTime, setWindowTime] = useState<ImgurGalleryWindowOfTime>(ImgurGalleryWindowOfTime.DAY);
   const [viralImages, setViralImages] = useState(true);
 
+  const [selectedImage, setSelectedImage] = useState<GalleryImageType | null>(null);
+
   useEffect(() => {
     getImgurGallery(section, sort, windowTime, viralImages)
-      .then(datilla => { setData(datilla.data); console.log(datilla); })
+      .then(data => { setImages(data.data); })
       .catch(err => { setErr(err); })
       .finally(() => { setLoading(false) });
 
@@ -46,8 +50,8 @@ const ImgurContextProvider: FC = ({ children }) => {
 
   return (
     <Provider value={{
-      state: { section, sort, windowTime, viralImages, error, loading, data },
-      actions: { setSort, setSection, setWindowTime, setViralImages }
+      state: { section, sort, windowTime, viralImages, error, loading, images, selectedImage },
+      actions: { setSort, setSection, setWindowTime, setViralImages, setSelectedImage }
     }}>
       {children}
     </ Provider>
