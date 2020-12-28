@@ -4,10 +4,6 @@ import { GalleryResponse } from '../../types';
 
 import GalleryCard from '../GalleryCard';
 
-interface IGalleryFeedProps {
-  items: GalleryResponse;
-}
-
 const numberOfColumnsByBreakpoint = {
   728: 1,
   1024: 2,
@@ -34,6 +30,10 @@ const generateColumns = (items: GalleryResponse, numberOfcolumns: number): Galle
 
   return columns;
 };
+
+interface IGalleryFeedProps {
+  items: GalleryResponse;
+}
 
 const GalleryFeed: FC<IGalleryFeedProps> = ({ items }) => {
   const imageWidth = 225;
