@@ -16,7 +16,7 @@ const GalleryControls: FC = () => {
         Choose the section of the gallery
       </Select>
       <Select id="sort-select" dispatcher={setSort} values={Object.values(ImgurGallerySortValues)} selected={sort}>
-              Sort images by
+        Sort images by
       </Select>
       <Select id="window-select" dispatcher={setWindowTime} values={Object.values(ImgurGalleryWindowOfTime)} selected={windowTime}>
         Select the window of time for the gallery
