@@ -1,7 +1,7 @@
 import { useState, useEffect, FC, Dispatch, SetStateAction } from 'react';
 import { createCtx } from '../../utils';
 import { getImgurGallery, } from '../../services/ImgurService';
-import { GalleryResponse, GalleryImageType, ImgurGallerySections, ImgurGallerySortValues, ImgurGalleryWindowOfTime } from '../../types';
+import { GalleryResponse, GalleryAlbumType, GalleryImageType, ImgurGallerySections, ImgurGallerySortValues, ImgurGalleryWindowOfTime } from '../../types';
 
 interface ImgurContextType {
   state: {
@@ -12,14 +12,14 @@ interface ImgurContextType {
     error: Error | null,
     loading: boolean,
     images: GalleryResponse,
-    selectedImage?: GalleryImageType | null
+    selectedMedia: GalleryImageType | GalleryAlbumType | null
   },
   actions: {
     setSort: Dispatch<SetStateAction<ImgurGallerySortValues>>,
     setSection: Dispatch<SetStateAction<ImgurGallerySections>>,
     setWindowTime: Dispatch<SetStateAction<ImgurGalleryWindowOfTime>>,
     setViralImages: Dispatch<SetStateAction<boolean>>,
-    setSelectedImage:Dispatch<SetStateAction<GalleryImageType | null>> 
+    setSelectedMedia: Dispatch<SetStateAction<GalleryImageType | GalleryAlbumType | null>> 
   }
 }
 
@@ -35,7 +35,7 @@ const ImgurContextProvider: FC = ({ children }) => {
   const [windowTime, setWindowTime] = useState<ImgurGalleryWindowOfTime>(ImgurGalleryWindowOfTime.DAY);
   const [viralImages, setViralImages] = useState(true);
 
-  const [selectedImage, setSelectedImage] = useState<GalleryImageType | null>(null);
+  const [selectedMedia, setSelectedMedia] = useState<(GalleryImageType | GalleryAlbumType) | null>(null);
 
   useEffect(() => {
     getImgurGallery(section, sort, windowTime, viralImages)
@@ -50,8 +50,8 @@ const ImgurContextProvider: FC = ({ children }) => {
 
   return (
     <Provider value={{
-      state: { section, sort, windowTime, viralImages, error, loading, images, selectedImage },
-      actions: { setSort, setSection, setWindowTime, setViralImages, setSelectedImage }
+      state: { section, sort, windowTime, viralImages, error, loading, images, selectedMedia },
+      actions: { setSort, setSection, setWindowTime, setViralImages, setSelectedMedia }
     }}>
       {children}
     </ Provider>
