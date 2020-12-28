@@ -36,16 +36,16 @@ const generateColumns = (items: GalleryResponse, numberOfcolumns: number): Galle
 };
 
 const GalleryFeed: FC<IGalleryFeedProps> = ({ items }) => {
-  const innerWidth = useInnerWidth();
-  const numberOfColumns = getNumberOfColumns(numberOfColumnsByBreakpoint, innerWidth);
+  const imageWidth = 225;
+  const numberOfColumns = getNumberOfColumns(numberOfColumnsByBreakpoint, useInnerWidth());
 
   const columns = useMemo(() => generateColumns(items, numberOfColumns), [items, numberOfColumns]);
 
   return (
     <main className="grid-container">
-      {columns.map(column => (
-        <div className="grid-column" style={{ width: '300px' }}>
-          {column.map(galleryItem => (<GalleryCard galleryItem={galleryItem} />))}
+      {columns.map((column, i) => (
+        <div key={`${column[0].id}_${i}`} className="grid-column" style={{ width: `${imageWidth}px` }}>
+          {column.map(galleryItem => (<GalleryCard key={galleryItem.id} galleryItem={galleryItem} width={imageWidth} />))}
         </div>
       ))}
     </main>
