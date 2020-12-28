@@ -1,0 +1,40 @@
+.modal-wrapper {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.vertical-media {
+  width: 65%;
+}
+
+.modal-media {
+  margin-bottom: 20px;
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  .modal-wrapper {
+    max-width: 80%;
+  }
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1366px) {
+  .modal-wrapper {
+    max-width: 70%;
+  }
+}
+
+@media only screen and (min-width: 1367px) and (max-width: 1600px) {
+  .modal-wrapper {
+    max-width: 60%;
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  .modal-wrapper {
+    max-width: 50%;
+  }
+}
