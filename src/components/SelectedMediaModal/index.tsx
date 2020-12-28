@@ -40,11 +40,14 @@ const SelectedImageModal: FC<ISelectedImageModalProps> = ({ selectedMedia, close
     >
       <div className="modal-wrapper">
         <h1>{selectedMedia.title}</h1>
-        <ModalMedia image={image}/>
+        {Array.isArray(image)
+            ? image.map(() => (<ModalMedia image={image}/>))
+            : <ModalMedia image={image}/>
+        } 
         <span>Upvotes: {selectedMedia.ups}</span>
         <span>Downvotes: {selectedMedia.downs}</span>
         <span>Score: {selectedMedia.score}</span>
-        <p>{selectedMedia.description}</p>
+        {selectedMedia && <p>{selectedMedia.description}</p>}
       </div>
     </Modal>
   );
