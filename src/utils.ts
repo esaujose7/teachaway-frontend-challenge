@@ -27,7 +27,3 @@ export function createCtx<ContextType>() {
   }
   return [useCtx, ctx.Provider] as const;
 }
-
-export function getImgurImageJPG(id: string) {
-  return `https://i.imgur.com/${id}.jpg`;
-}
