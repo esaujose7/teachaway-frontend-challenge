@@ -1,7 +1,19 @@
-export interface ImgurResponse<T> {
-  data: T; //T|Error;
+export interface ErrorRespone {
+  error: string;
+  request: string;
+  method: string;
+}
+
+export interface ImgurErrorResponse {
+  data: ErrorRespone;
   status: number;
-  success: boolean;
+  success: false;
+}
+
+export interface ImgurResponse<T> {
+  data: T;
+  status: number;
+  success: true;
 }
 
 export interface GalleryItemType {

@@ -39,7 +39,13 @@ const ImgurContextProvider: FC = ({ children }) => {
 
   useEffect(() => {
     getImgurGallery(section, sort, windowTime, viralImages)
-      .then(data => { setImages(data.data); })
+      .then(data => {
+        if (data.success) {
+          setImages(data.data);
+        } else {
+          setErr(new Error(`${data.status} | ${data.data.method} ${data.data.request} : ${data.data.error}`))
+        }
+      })
       .catch(err => { setErr(err); })
       .finally(() => { setLoading(false) });
 

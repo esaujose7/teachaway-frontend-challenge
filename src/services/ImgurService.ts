@@ -1,5 +1,5 @@
 import { api } from '../utils';
-import { ImgurResponse, GalleryResponse, ImgurGallerySections, ImgurGallerySortValues, ImgurGalleryWindowOfTime } from '../types';
+import { ImgurErrorResponse, ImgurResponse, GalleryResponse, ImgurGallerySections, ImgurGallerySortValues, ImgurGalleryWindowOfTime } from '../types';
 
 function getImgurGallery(
   section: ImgurGallerySections = ImgurGallerySections.HOT,
@@ -8,7 +8,7 @@ function getImgurGallery(
   includeViralImages = true,
   page = 1
 ) {
-  return api<ImgurResponse<GalleryResponse>>(
+  return api<ImgurErrorResponse | ImgurResponse<GalleryResponse>>(
     `/gallery/${section}/${sort}/${windowOfTime}/${page}?showViral=${includeViralImages}`
   );
 }
