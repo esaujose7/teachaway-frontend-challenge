@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 const Loading: FC = () => (
-  <div> un chance manito ... </div>
+  <div>Loading, please wait...</div>
 )
 
 export default Loading;
