@@ -1,10 +1,6 @@
 import { FC, ChangeEvent } from 'react';
-
-function onChanger(fn: Function) {
-  return (e: ChangeEvent<HTMLSelectElement>) => {
-    fn(e.target.value);
-  }
-}
+import FormControl from '../FormControl';
+import './style.css';
 
 type SelectorProps = {
   id: string,
@@ -13,10 +9,17 @@ type SelectorProps = {
   selected: string
 };
 
-const Select: FC<SelectorProps> = ({ id, dispatcher, values, selected }) => (
-  <select id={id} name={id} onChange={onChanger(dispatcher)} value={selected}>
-    {values.map((value) => <option key={value} value={value}>{value}</option>)}
-  </select>
+const uppercaseFirstLetter = (string: string) => {
+  return string.slice(0, 1).toUpperCase().concat(string.slice(1, string.length));
+}
+
+const Select: FC<SelectorProps> = ({ id, dispatcher, values, selected, children }) => (
+  <FormControl direction="column">
+    <label htmlFor={id} className="select-description bold">{children}</label>  
+    <select id={id} name={id} onChange={(e: ChangeEvent<HTMLSelectElement>) => { dispatcher(e.target.value) }} value={selected}>
+      {values.map((value) => <option key={value} value={value}>{uppercaseFirstLetter(value)}</option>)}
+    </select>
+  </FormControl>
 )
 
 export default Select;

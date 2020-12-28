@@ -3,6 +3,7 @@ import { ImgurGallerySections, ImgurGallerySortValues, ImgurGalleryWindowOfTime 
 import useImgurContext from './context/Imgur';
 import GalleryFeed from './components/GalleryFeed';
 import Select from './components/Select';
+import FormControl from './components/FormControl';
 
 import './App.css'
 
@@ -18,13 +19,21 @@ const App = () => {
         ? <div>something bad happened, please try again later. Error: {error.message}</div>
         : <>
           <header className="header">
-            <Select id="section-select" dispatcher={setSection} values={Object.values(ImgurGallerySections)} selected={section}/>
-              <Select id="sort-select" dispatcher={setSort} values={Object.values(ImgurGallerySortValues)} selected={sort}/>
-              <Select id="window-select" dispatcher={setWindowTime} values={Object.values(ImgurGalleryWindowOfTime)} selected={windowTime}/>
+            <Select id="section-select" dispatcher={setSection} values={Object.values(ImgurGallerySections)} selected={section}>
+              Choose the section of the gallery
+            </Select>
+            <Select id="sort-select" dispatcher={setSort} values={Object.values(ImgurGallerySortValues)} selected={sort}>
+              Sort images by
+            </Select>
+            <Select id="window-select" dispatcher={setWindowTime} values={Object.values(ImgurGalleryWindowOfTime)} selected={windowTime}>
+              Select the window of time for the gallery
+            </Select>
+            <FormControl direction="row">
               <input id="viralImagesCheckbox" type="checkbox" checked={viralImages} onChange={() => { setViralImages(viralImage => !viralImage) }} />
-              <label htmlFor="viralImagesCheckbox">viral images sis o non</label> 
-            </header>
-            {loading ? <div> un chance manito ... </div> : <GalleryFeed items={images} />}
+              <label htmlFor="viralImagesCheckbox" className="bold ml-10">Show viral images?</label> 
+            </FormControl>
+          </header>
+          {loading ? <div> un chance manito ... </div> : <GalleryFeed items={images} />}
         </>
       }
     </div>
