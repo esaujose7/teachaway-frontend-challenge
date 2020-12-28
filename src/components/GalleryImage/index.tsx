@@ -1,19 +1,26 @@
 import { FC } from 'react';
 import { GalleryImageType } from '../../types';
-import { getImgurImageJPG } from '../../utils';
 
 import AspectRatio from '../AspectRatio';
 
 interface IGalleryImageProps {
   image: GalleryImageType;
+  displayWidth: number;
 }
 
-const GalleryImage: FC<IGalleryImageProps> = ({ image }) => {
-  const imageUrl = image.type.startsWith('video') ? getImgurImageJPG(image.id) : image.link;
+function getImgurImageJPG(image: GalleryImageType) {
+  const [, extension] = image.type.split('/');
+  const splittedUrl = image.link.split(extension);
+  splittedUrl[splittedUrl.length - 1] = 'jpg';
+  return splittedUrl.join('');
+}
+
+const GalleryImage: FC<IGalleryImageProps> = ({ image, displayWidth }) => {
+  const imageUrl = image.type.startsWith('video') ? getImgurImageJPG(image) : image.link;
 
   return (
     <AspectRatio height={image.height} width={image.width}>
-      <img src={imageUrl} alt={image.title}/>
+      <img src={imageUrl.concat(`?maxWidth=${displayWidth}`)} alt={image.title}/>
     </AspectRatio>
   )
 };
