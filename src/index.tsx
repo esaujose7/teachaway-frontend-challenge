@@ -1,8 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import Modal from 'react-modal';
 import { ImgurContextProvider } from './context/Imgur';
 import reportWebVitals from './reportWebVitals';
+
+const rootElement = document.getElementById('root');
+
+Modal.setAppElement(rootElement as HTMLElement);
 
 ReactDOM.render(
   <React.StrictMode>
@@ -10,7 +15,7 @@ ReactDOM.render(
       <App />
     </ImgurContextProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  rootElement
 );
 
 // If you want to start measuring performance in your app, pass a function
