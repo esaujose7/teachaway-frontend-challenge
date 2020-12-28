@@ -4,6 +4,8 @@ import useImgurContext from './context/Imgur';
 import GalleryFeed from './components/GalleryFeed';
 import Select from './components/Select';
 import FormControl from './components/FormControl';
+import Error from './components/Error';
+import Loading from './components/Loading';
 
 import './App.css'
 
@@ -16,7 +18,7 @@ const App = () => {
   return (
     <div className="wrapper">
       {error
-        ? <div>something bad happened, please try again later. Error: {error.message}</div>
+        ? <Error error={error} />
         : <>
           <header className="header">
             <Select id="section-select" dispatcher={setSection} values={Object.values(ImgurGallerySections)} selected={section}>
@@ -33,7 +35,7 @@ const App = () => {
               <label htmlFor="viralImagesCheckbox" className="bold ml-10">Show viral images?</label> 
             </FormControl>
           </header>
-          {loading ? <div> un chance manito ... </div> : <GalleryFeed items={images} />}
+          {loading ? <Loading /> : <GalleryFeed items={images} />}
         </>
       }
     </div>
