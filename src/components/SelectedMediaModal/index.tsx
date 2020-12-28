@@ -44,9 +44,9 @@ const SelectedImageModal: FC<ISelectedImageModalProps> = ({ selectedMedia, close
             ? image.map(() => (<ModalMedia image={image}/>))
             : <ModalMedia image={image}/>
         } 
-        <span>Upvotes: {selectedMedia.ups}</span>
-        <span>Downvotes: {selectedMedia.downs}</span>
-        <span>Score: {selectedMedia.score}</span>
+        <span><strong>Upvotes:</strong> {selectedMedia.ups}</span>
+        <span><strong>Downvotes:</strong> {selectedMedia.downs}</span>
+        <span><strong>Score:</strong> {selectedMedia.score}</span>
         {selectedMedia && <p>{selectedMedia.description}</p>}
       </div>
     </Modal>
