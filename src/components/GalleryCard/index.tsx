@@ -15,7 +15,7 @@ const GalleryCard: FC<IGalleryCardProps> = ({ galleryItem, width }) => {
 
   return (
     <div className="gallery-card" onClick={() => { setSelectedMedia(galleryItem) }}>
-      <GalleryImage image={galleryItem.is_album ? galleryItem.images[0] as GalleryImageType : galleryItem} displayWidth={width}/>
+      <GalleryImage image={galleryItem.is_album ? galleryItem.images[0] : galleryItem} displayWidth={width}/>
       <span className="gallery-description">{galleryItem.title}</span>
     </div>
   );
