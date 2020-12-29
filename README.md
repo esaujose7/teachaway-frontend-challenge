@@ -13,7 +13,7 @@ A sample of the .env is already located in the root folder, so we just need to m
 cat .env.sample > .env
 ```
 
-This will make the file, what we will need is a Client ID and place it on that file, after the `REACT_APP_IMGUR_CLIENT_ID=`. Again, we can use bash or just open it on a text editor and edit it manually
+This will make the file, what we will need is a Client ID and place it on that file, after the `REACT_APP_IMGUR_CLIENT_ID=`.
 
 After having a Client ID set, then feel free to start up the project with `npm start`.
 
@@ -26,7 +26,8 @@ it lets me to automatically fetch the new galleries when any of those values cha
 
 In the App component you can see the main components of the app, such as GalleryFeed.
 
-The GalleryFeed has an interesting approach to rendering it, I have each column of the grid with a fixed width, but also wanted to keep the order in which the images comes from the API to be visually horizontal
+The GalleryFeed has an interesting approach to rendering it, I have each column of the grid with a fixed width, but also wanted to keep the order in which the images comes from the API to be visually horizontal order.
+
 Example:
 
 ```
