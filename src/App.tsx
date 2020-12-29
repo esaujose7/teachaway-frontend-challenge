@@ -10,7 +10,7 @@ import './App.css'
 
 const App = () => {
   const { error, loading, images, selectedMedia } = useImgurState();
-  const { setSelectedMedia } = useImgurActions();
+  const { clearSelectedMedia } = useImgurActions();
 
   if (error) {
     return (
@@ -22,7 +22,7 @@ const App = () => {
 
   return (
     <div className="wrapper">
-      {selectedMedia && <SelectedMediaModal selectedMedia={selectedMedia} closeModal={(_: MouseEvent) => { setSelectedMedia(null); }} />}     
+      {selectedMedia && <SelectedMediaModal selectedMedia={selectedMedia} closeModal={(_: MouseEvent) => { clearSelectedMedia(); }} />}     
       <GalleryControls />
       {loading ? <Loading /> : <GalleryFeed items={images} />}
     </div>

@@ -16,7 +16,7 @@ const uppercaseFirstLetter = (string: string) => {
 const Select: FC<SelectorProps> = ({ id, dispatcher, values, selected, children }) => (
   <FormControl direction="column">
     <label htmlFor={id} className="select-description bold">{children}</label>  
-    <select id={id} name={id} onChange={(e: ChangeEvent<HTMLSelectElement>) => { dispatcher(e.target.value) }} value={selected}>
+    <select id={id} name={id} onChange={(e: ChangeEvent<HTMLSelectElement>) => { dispatcher({ key: id, value: e.target.value }) }} value={selected}>
       {values.map((value) => <option key={value} value={value}>{uppercaseFirstLetter(value)}</option>)}
     </select>
   </FormControl>
