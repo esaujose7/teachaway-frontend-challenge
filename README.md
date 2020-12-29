@@ -21,6 +21,8 @@ After having a Client ID set, then feel free to start up the project with `npm s
 
 ## Technical Approach
 
+Went ahead and did the exercise with TypeScript, I'm not the most experienced with it but have done a small project or two using it, I really like the type checking and the robustness it can provide in the solution.
+
 Used a React Context to have all my app state under it, the useEffect in that context is crucial to fetching the gallery with the different section, sort, window and viralImages it can have. Basically, 
 it lets me to automatically fetch the new galleries when any of those values changes, also the cleanup function takes care of setting the loading state for me on each new fetch.
 
