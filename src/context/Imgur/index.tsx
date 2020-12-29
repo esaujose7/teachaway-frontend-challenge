@@ -1,63 +1,57 @@
-import { useState, useEffect, FC, Dispatch, SetStateAction } from 'react';
+import { useReducer, useEffect, FC } from 'react';
+import reducer, { initialState } from './reducer'
+import { ImgurState, ChangeFiltersType, CHANGE_FILTERS, LOADING, ERROR, SUCCESFUL_LOAD, SET_SELECTED_MEDIA, CLEAR_SELECTED_MEDIA } from './types';
 import { createCtx } from '../../utils';
 import { getImgurGallery, } from '../../services/ImgurService';
-import { GalleryResponse, GalleryAlbumType, GalleryImageType, ImgurGallerySections, ImgurGallerySortValues, ImgurGalleryWindowOfTime } from '../../types';
+import { GalleryAlbumType, GalleryImageType } from '../../types';
 
 interface ImgurContextType {
-  state: {
-    section: ImgurGallerySections,
-    sort: ImgurGallerySortValues,
-    windowTime: ImgurGalleryWindowOfTime,
-    viralImages: boolean,
-    error: Error | null,
-    loading: boolean,
-    images: GalleryResponse,
-    selectedMedia: GalleryImageType | GalleryAlbumType | null
-  },
+  state: ImgurState,
   actions: {
-    setSort: Dispatch<SetStateAction<ImgurGallerySortValues>>,
-    setSection: Dispatch<SetStateAction<ImgurGallerySections>>,
-    setWindowTime: Dispatch<SetStateAction<ImgurGalleryWindowOfTime>>,
-    setViralImages: Dispatch<SetStateAction<boolean>>,
-    setSelectedMedia: Dispatch<SetStateAction<GalleryImageType | GalleryAlbumType | null>> 
+    changeGalleryFilters: (filter: ChangeFiltersType) => void;
+    setSelectedMedia: (media: GalleryImageType | GalleryAlbumType) => void;
+    clearSelectedMedia: () => void;
   }
 }
 
 const [useImgurContext, Provider] = createCtx<ImgurContextType>();
 
 const ImgurContextProvider: FC = ({ children }) => {
-  const [images, setImages] = useState<GalleryResponse>([]);
-  const [error, setErr] = useState<Error | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  const [section, setSection] = useState<ImgurGallerySections>(ImgurGallerySections.HOT);
-  const [sort, setSort] = useState<ImgurGallerySortValues>(ImgurGallerySortValues.VIRAL);
-  const [windowTime, setWindowTime] = useState<ImgurGalleryWindowOfTime>(ImgurGalleryWindowOfTime.DAY);
-  const [viralImages, setViralImages] = useState(true);
-
-  const [selectedMedia, setSelectedMedia] = useState<(GalleryImageType | GalleryAlbumType) | null>(null);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    getImgurGallery(section, sort, windowTime, viralImages)
+    getImgurGallery(state.section, state.sort, state.windowTime, state.viralImages)
       .then(data => {
         if (data.success) {
-          setImages(data.data);
+          dispatch({ type: SUCCESFUL_LOAD, payload: data.data });
         } else {
-          setErr(new Error(`${data.status} | ${data.data.method} ${data.data.request} : ${data.data.error}`))
+          const errorMessage = `${data.status} | ${data.data.method} ${data.data.request} : ${data.data.error}`;
+          dispatch({ type: ERROR, payload: Error(errorMessage) });
         }
       })
-      .catch(err => { setErr(err); })
-      .finally(() => { setLoading(false) });
+      .catch(err => { dispatch({ type: ERROR, payload: err }); })
 
     return () => {
-      setLoading(true);
+      dispatch({ type: LOADING });
     };
-  }, [section, sort, windowTime, viralImages]);
+  }, [state.section, state.sort, state.windowTime, state.viralImages]);
+
+  const changeGalleryFilters = (filter: ChangeFiltersType) => {
+    dispatch({ type: CHANGE_FILTERS, payload: filter })
+  }
+
+  const setSelectedMedia = (media: GalleryAlbumType | GalleryImageType) => {
+    dispatch({ type: SET_SELECTED_MEDIA, payload: media })
+  }
+
+  const clearSelectedMedia = () => {
+    dispatch({ type: CLEAR_SELECTED_MEDIA });
+  }
 
   return (
     <Provider value={{
-      state: { section, sort, windowTime, viralImages, error, loading, images, selectedMedia },
-      actions: { setSort, setSection, setWindowTime, setViralImages, setSelectedMedia }
+      state,
+      actions: { changeGalleryFilters, setSelectedMedia, clearSelectedMedia }
     }}>
       {children}
     </ Provider>
